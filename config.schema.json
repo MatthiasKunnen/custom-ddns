@@ -1,0 +1,207 @@
+{
+  "$id": "DdnsConfig",
+  "$ref": "#/definitions/Config",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CloudflareConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "apiToken": {
+          "$ref": "#/definitions/Variable"
+        },
+        "proxied": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Variable%3Cboolean%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to enable proxy. If not specified, update will not overwrite existing setting and create will use the Cloudflare default."
+        },
+        "ttl": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Variable%3Cnumber%3E"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The Time To Live in seconds to be set on DNS records. If not specified, update will not set TTL and create will use automatic TTL."
+        },
+        "zoneId": {
+          "$ref": "#/definitions/Variable"
+        }
+      },
+      "required": [
+        "apiToken",
+        "zoneId"
+      ],
+      "type": "object"
+    },
+    "CloudflareProviderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "$ref": "#/definitions/CloudflareConfig"
+        },
+        "name": {
+          "const": "Cloudflare",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "config"
+      ],
+      "type": "object"
+    },
+    "Config": {
+      "additionalProperties": false,
+      "description": "Schema for the configuration that powers the custom DDNS executors.",
+      "properties": {
+        "configs": {
+          "description": "The list of configs makes it possible to update multiple domains across multiple providers. See <http://github.com/MatthiasKunnen/custom-ddns/config.yaml>.",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "authPassword": {
+                "$ref": "#/definitions/Variable",
+                "description": "The password that is used to authenticate the update request."
+              },
+              "hosts": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The fully qualified domain names that should have their DNS records updated.",
+                "examples": [
+                  [
+                    "sub.example.com",
+                    "domain.eu"
+                  ]
+                ]
+              },
+              "provider": {
+                "$ref": "#/definitions/CloudflareProviderConfig",
+                "description": "The name of the provider to use."
+              },
+              "tag": {
+                "description": "When specified, this limits this config item to only be executed when this tag is specified in the update query params.",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "useHostsFromRequest": {
+                "default": false,
+                "description": "When true, any hostname specified in the request will be updated. Is combined with the `hosts` property.",
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "provider",
+              "authPassword"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "configs"
+      ],
+      "type": "object"
+    },
+    "Variable": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "const": "Env",
+              "description": "Where to get the variable from.",
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of the variable.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "from",
+            "name"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Variable<boolean>": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "const": "Env",
+              "description": "Where to get the variable from.",
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of the variable.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "from",
+            "name"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Variable<number>": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "const": "Env",
+              "description": "Where to get the variable from.",
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of the variable.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "from",
+            "name"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

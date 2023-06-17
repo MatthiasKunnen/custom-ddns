@@ -1,0 +1,20 @@
+# IntelliJ
+.idea
+!.idea/jsonSchemas.xml
+
+# OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+yarn-error.log
+
+node_modules/
+dist/
+.eslintcache
+.env
+*.min.*
+*.local.*
+
+config.yaml

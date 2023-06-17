@@ -1,0 +1,19 @@
+{
+    "name": "ddns-providers",
+    "version": "0.0.1",
+    "license": "AGPL-3.0-or-later",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "lint": "eslint index.ts \"src/**/*.ts\""
+    },
+    "dependencies": {
+        "punycode.js": "^2.3.0"
+    },
+    "devDependencies": {
+        "@types/node-fetch": "^2.6.4",
+        "@types/node": "^18.16.18",
+        "@types/punycode.js": "npm:@types/punycode",
+        "typescript": "^5.0.4"
+    }
+}

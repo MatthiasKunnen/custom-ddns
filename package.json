@@ -1,0 +1,26 @@
+{
+    "name": "custom-ddns",
+    "version": "0.0.1",
+    "license": "AGPL-3.0-or-later",
+    "type": "module",
+    "private": true,
+    "workspaces": [
+        "src/typescript/base",
+        "src/typescript/executors/cloudflare-worker",
+        "src/typescript/providers"
+    ],
+    "packageManager": "yarn@1.22.15",
+    "engines": {
+        "node": "^18.16.0"
+    },
+    "scripts": {
+        "update-config-schema": "yarn run update-config-schema:generate-schema && yarn run update-config-schema:generate-validations",
+        "update-config-schema:generate-schema": "ts-json-schema-generator --path src/typescript/base/src/config.interface.ts --tsconfig src/typescript/base/tsconfig.json --type Config --id DdnsConfig --out config.schema.json",
+        "update-config-schema:generate-validations": "node tools/generate-ajv-validation.js",
+        "validate-config": "node tools/validate-config.js"
+    },
+    "devDependencies": {
+        "ajv-cli": "^5.0.0",
+        "ts-json-schema-generator": "^1.2.0"
+    }
+}
