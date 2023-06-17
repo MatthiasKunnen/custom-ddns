@@ -11,6 +11,7 @@
         ],
         "module": "ES2022",
         "moduleResolution": "node",
+        "noEmit": true,
         "noImplicitAny": true,
         "sourceMap": true,
         "strict": true,
