@@ -6,7 +6,6 @@ import type {Provider, UpdateIpInput} from '../provider.interface';
 export class CloudflareProvider implements Provider {
 
     static readonly providerName = 'Cloudflare';
-    private static readonly zoneIdNameCache = new Map<string, string>();
 
     async updateIp(input: UpdateIpInput): Promise<void> {
         const cloudflareApiToken = input.config.apiToken;
