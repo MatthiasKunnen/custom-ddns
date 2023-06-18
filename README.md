@@ -41,7 +41,8 @@ Currently supported (DNS provider/language):
 - [Cloudflare/TypeScript](./src/typescript/providers/src/cloudflare) 
 
 ## Configuration and usage
-Configuring Custom DDNS is done using `config.yaml`. 
+Configuring Custom DDNS is done using `config.yaml`
+(view [config spec](https://json-schema.app/view/%23%2Fdefinitions%2FConfig?url=https%3A%2F%2Fraw.githubusercontent.com%2FMatthiasKunnen%2Fcustom-ddns%2Fmaster%2Fconfig.schema.json)).
 
 Follow these steps:
 - Based on your DNS provider, read the [provider specific documentation](#providers).
@@ -53,3 +54,5 @@ Follow these steps:
 
 ### Configuration spec
 The source of truth for the `config.yaml` schema is the TypeScript [Config interface](./src/typescript/base/src/config.interface.ts). From this interface, the JSON schema [`config.schema.json`](./config.schema.json) is generated using `yarn run update-config-schema`.
+
+Visualize the schema of the config file on [json-schema.org](https://json-schema.app/view/%23%2Fdefinitions%2FConfig?url=https%3A%2F%2Fraw.githubusercontent.com%2FMatthiasKunnen%2Fcustom-ddns%2Fmaster%2Fconfig.schema.json).
