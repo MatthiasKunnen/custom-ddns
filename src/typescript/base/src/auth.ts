@@ -1,3 +1,5 @@
+import {decode as base64Decode} from 'js-base64';
+
 import {CustomError} from './custom-error';
 
 export function getUsernameAndPasswordFromBasicAuth(
@@ -13,7 +15,7 @@ export function getUsernameAndPasswordFromBasicAuth(
         });
     }
 
-    const auth = Buffer.from(header.split(' ')[1], 'base64').toString();
+    const auth = base64Decode(header.split(' ')[1]);
     const separatorIndex = auth.indexOf(':');
 
     if (separatorIndex < 0) {
