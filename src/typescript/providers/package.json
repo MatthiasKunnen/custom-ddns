@@ -12,7 +12,6 @@
     },
     "devDependencies": {
         "@types/node-fetch": "^2.6.4",
-        "@types/node": "^18.16.18",
         "@types/punycode.js": "npm:@types/punycode",
         "typescript": "^5.0.4"
     }

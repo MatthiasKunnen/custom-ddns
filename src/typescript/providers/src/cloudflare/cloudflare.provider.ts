@@ -48,7 +48,7 @@ export class CloudflareProvider implements Provider {
                 `client/v4/zones/${zoneId}/dns_records?${searchQueryParams.toString()}`,
                 cloudflareApiToken,
             );
-            const listDnsRecordData = await listDnsRecordResponse.json();
+            const listDnsRecordData: any = await listDnsRecordResponse.json();
 
             if (listDnsRecordData.success !== true) {
                 throw new CustomError({
@@ -76,7 +76,7 @@ export class CloudflareProvider implements Provider {
                         }),
                     },
                 );
-                const createDnsRecordData = await createDnsRecordResponse.json();
+                const createDnsRecordData: any = await createDnsRecordResponse.json();
                 if (createDnsRecordData.success !== true) {
                     throw new CustomError({
                         message: 'Cloudflare provider: Failed to create DNS record',
@@ -103,7 +103,7 @@ export class CloudflareProvider implements Provider {
                             }),
                         },
                     );
-                    const patchDnsRecordData = await patchDnsRecordResponse.json();
+                    const patchDnsRecordData: any = await patchDnsRecordResponse.json();
                     if (patchDnsRecordData.success !== true) {
                         throw new CustomError({
                             message: 'Cloudflare provider: Failed to patch DNS record',
@@ -128,7 +128,7 @@ export class CloudflareProvider implements Provider {
             `client/v4/zones/${zoneId}`,
             cloudflareApiToken,
         );
-        const zoneDetailData = await zoneDetailsResponse.json();
+        const zoneDetailData: any = await zoneDetailsResponse.json();
 
         if (zoneDetailData.success !== true) {
             throw new CustomError({

@@ -16,7 +16,6 @@
     "devDependencies": {
         "@matthiaskunnen/eslint-config-typescript": "^5.0.0",
         "@types/js-yaml": "^4.0.5",
-        "@types/node": "^18.16.18",
         "@types/validator": "^13.7.17",
         "eslint": "^8.42.0",
         "typescript": "^5.0.4",
