@@ -15,7 +15,7 @@
     },
     "scripts": {
         "update-config-schema": "yarn run update-config-schema:generate-schema && yarn run update-config-schema:generate-validations",
-        "update-config-schema:generate-schema": "ts-json-schema-generator --path src/typescript/base/src/config.interface.ts --tsconfig src/typescript/base/tsconfig.json --type Config --id DdnsConfig --out config.schema.json",
+        "update-config-schema:generate-schema": "ts-json-schema-generator --path src/typescript/base/src/config.interface.ts --expose all --no-type-check --tsconfig src/typescript/base/tsconfig.json --type Config --id DdnsConfig --out config.schema.json",
         "update-config-schema:generate-validations": "node tools/generate-ajv-validation.js",
         "validate-config": "node tools/validate-config.js"
     },
