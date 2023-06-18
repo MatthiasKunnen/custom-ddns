@@ -7,7 +7,13 @@ Unifi uses [inadyn](https://github.com/troglobit/inadyn) to perform DDNS. See co
 On every configuration change, an update will be sent unless the current IP has already been sent for that hostname. This means that editing the hostname setting to a previously unused hostname is an easy way to force an update request.  Inadyn cache can be found and deleted in `/var/cache/inadyn/`.
 
 ### Service
-Use `dyndns` as service.
+Working:
+- afraid
+- dnspark
+- dyndns
+
+Not working:
+- namecheap
 
 ### Hostname
 Mapped to [Inadyn hostname](https://man.troglobit.com/man5/inadyn.conf.5.html#hostname_=_HOSTNAME). Changing this setting to a previously unused value will force trigger a DDNS update. 
