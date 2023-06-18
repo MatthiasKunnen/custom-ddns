@@ -16,5 +16,6 @@ dist/
 .env
 *.min.*
 *.local.*
+*.tsbuildinfo
 
 config.yaml
