@@ -7,36 +7,39 @@
 ## Provider config
 The following provider specific config is available.
 
-`name` **required**  
-Must be `Cloudflare`.
-
-`config.apiToken` Var(string) **required**  
+`apiToken` Var(string) **required**  
 An API token that has `DNS:edit` permissions for the zone.
 
-`config.zoneId` Var(string) **required**  
+`zoneId` Var(string) **required**  
 The ID of your Cloudflare zone. See <https://www.cloudflare.com/en-gb/learning/dns/glossary/dns-zone/>.
 
-`config.proxied` Var(boolean)   
+`hosts` Array  
+Either a list of domain names or a list of objects with the `name`, `proxied`, and `ttl` properties.
+
+`hosts.name` string  
+The FQDN you want to update the domain name of.
+
+`hosts.proxied` boolean  
 Whether to enable Cloudflare proxy for the DNS records. If not specified, update will not overwrite the existing proxy setting and create will use the Cloudflare default.
 
-`config.ttl` Var(number)  
+`hosts.ttl` number  
 The TTL of the DNS records. If not specified, update will not overwrite the existing TTL and create will use the Cloudflare _Auto_ setting.
+
+`useHostsFromRequest` boolean  
+When `true`, any hostname specified in the request will be updated. Is combined with the `hosts` property.
 
 ### Example
 Minimal config:
 ```yaml
-configs:
-  - provider:
-      name: Cloudflare
-      config:
-        apiToken:
-          from: Env
-          name: CLOUDFLARE_API_TOKEN
-        zoneId: your-zone-id
-    authPassword:
-      from: Env
-      name: AUTH_PASSWORD
-    hosts:
-      - your.domain.com
-      - domain.com
+cloudflare:
+  apiToken:
+    from: Env
+    name: CLOUDFLARE_API_TOKEN
+  zoneId: 0eb4e056cd3ad6653d4635e1aa208992
+  hosts:
+    - example.com
+    - name: example.com
+      ttl: 60
+      proxied: false
+  useHostsFromRequest: true
 ```

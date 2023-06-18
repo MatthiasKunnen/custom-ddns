@@ -2,33 +2,46 @@ import {CustomError} from 'ddns-base';
 import * as punycode from 'punycode.js';
 
 import type {Provider, UpdateIpInput} from '../provider.interface';
+import type {CloudflareProviderConfig} from './config.interface';
 
 export class CloudflareProvider implements Provider {
 
-    static readonly providerName = 'Cloudflare';
+    static readonly providerName = 'cloudflare';
 
     async updateIp(input: UpdateIpInput): Promise<void> {
-        const cloudflareApiToken = input.config.apiToken;
-        if (cloudflareApiToken == null || typeof cloudflareApiToken !== 'string') {
+        // Cast is allowed because it should have been validated
+        const config = input.config as unknown as CloudflareProviderConfig;
+        const cloudflareApiToken = input.getVariable(config.apiToken);
+        if (cloudflareApiToken == null) {
             throw new Error('Cloudflare provider: apiToken not provided');
         }
 
-        const proxied = input.config.proxied == null
-            ? undefined
-            : input.config.proxied === true || input.config.proxied === 'true';
-
-        let ttl: number | undefined = Number(input.config.ttl);
-        ttl = isNaN(ttl) ? undefined : ttl;
-
-        const zoneId = input.config.zoneId;
-        if (zoneId == null || typeof zoneId !== 'string') {
+        const zoneId = input.getVariable(config.zoneId);
+        if (zoneId == null) {
             throw new Error('Cloudflare provider: zoneId not provided');
         }
 
         const recordType = input.ipVersion === 'IPv4' ? 'A' : 'AAAA';
         const zoneName = await this.getZoneName(zoneId, cloudflareApiToken);
 
-        await Promise.all(input.hosts.map(async host => {
+        const hosts = Array.from(new Set([
+            ...config.hosts ?? [],
+            ...config.useHostsFromRequest === true ? input.requestHosts : [],
+        ]));
+
+        await Promise.all(hosts.map(async hostConfig => {
+            let host: string;
+            let ttl: number | null | undefined;
+            let proxied: boolean | null | undefined;
+
+            if (typeof hostConfig === 'string') {
+                host = hostConfig;
+            } else {
+                host = hostConfig.name;
+                ttl = hostConfig.ttl;
+                proxied = hostConfig.proxied;
+            }
+
             if (host !== zoneName && !host.endsWith(`.${zoneName}`)) {
                 throw new CustomError({
                     message: `Cloudflare provider: host ${host} should end in ${zoneName}`,

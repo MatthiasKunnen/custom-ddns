@@ -1,4 +1,4 @@
-import type {CloudflareProviderConfig} from 'ddns-providers';
+import type {ProvidersConfig} from 'ddns-providers';
 
 /**
  * Schema for the configuration that powers the custom DDNS executors.
@@ -19,27 +19,14 @@ interface ConfigsItem {
     tag?: string | null;
 
     /**
-     * The name of the provider to use.
-     */
-    provider: CloudflareProviderConfig;
-
-    /**
      * The password that is used to authenticate the update request.
      */
     authPassword: Variable;
 
     /**
-     * The fully qualified domain names that should have their DNS records updated.
-     * @example ['sub.example.com', 'domain.eu']
+     * The providers. Multiple providers can be configured simultaneously.
      */
-    hosts?: Array<string> | null;
-
-    /**
-     * When true, any hostname specified in the request will be updated. Is combined with the
-     * `hosts` property.
-     * @default false
-     */
-    useHostsFromRequest?: boolean | null;
+    providers: ProvidersConfig;
 }
 
 /**

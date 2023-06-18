@@ -1,7 +1,7 @@
-import {getProviderByName} from 'ddns-providers/src/providers';
+import {getProviders} from 'ddns-providers/src/providers';
 
 import {getVariable} from './config';
-import type {Config} from './config.interface';
+import type {Config, Variable} from './config.interface';
 import {CustomError} from './custom-error';
 import type {IpVersion} from './ip.interface';
 
@@ -35,6 +35,10 @@ export async function updateIp(
             : c.tag != null && tags.includes(c.tag);
     });
 
+    const getVariableIntermediate = (variable: Variable) => {
+        return getVariable(variable, env);
+    };
+
     await Promise.all(configs.map(async c => {
         if (getVariable(c.authPassword, env) !== providedPassword) {
             throw new CustomError({
@@ -46,29 +50,16 @@ export async function updateIp(
             });
         }
 
-        const provider = getProviderByName(c.provider.name);
+        const providers = getProviders(c.providers);
 
-        if (provider === undefined) {
-            throw new CustomError({
-                message: `Unknown provider ${c.provider.name}`,
+        for (const {providerConfig, provider} of providers) {
+            await provider.updateIp({
+                config: providerConfig as any, // Validated so we can cast without issue
+                getVariable: getVariableIntermediate,
+                ip,
+                ipVersion,
+                requestHosts: requestHosts,
             });
         }
-
-        const providerConfig = Object.entries(c.provider.config)
-            .reduce<Record<string, unknown>>((acc, [key, value]) => {
-                acc[key] = getVariable(value, env);
-
-                return acc;
-            }, {});
-
-        await provider.updateIp({
-            config: providerConfig,
-            hosts: Array.from(new Set([
-                ...c.useHostsFromRequest === true ? requestHosts : [],
-                ...c.hosts ?? [],
-            ])),
-            ip,
-            ipVersion,
-        });
     }));
 }

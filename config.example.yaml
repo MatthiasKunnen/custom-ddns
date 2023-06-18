@@ -5,9 +5,9 @@
 # executor is notified of changes. It is possible to update multiple records across multiple DNS
 # providers.
 configs:
-  - provider:
-      name: Cloudflare
-      config:
+  - providers:
+      # Multiple providers can be configured simultaneously
+      cloudflare:
         # There are two ways of defining config variables, either set the value directly, like
         # zoneId or specify where it can be found, like apiToken. The latter is recommended for
         # secrets.
@@ -15,29 +15,32 @@ configs:
         apiToken:
           from: Env
           name: CLOUDFLARE_API_TOKEN
+        hosts:
+          - example.com
+
+        # By default, only the hosts defined in this yaml file will be updated. This is more secure as
+        # your router cannot set any arbitrary DNS records. However, you can allow this for
+        # convenience’s sake by setting useHostsFromRequest to true. When true, the hosts in the config
+        # and request will be merged.
+        useHostsFromRequest: true
     authPassword: # The auth password is used to make sure only you can make the executor update requests
       from: Env
       name: AUTH_PASSWORD
-    # By default, only the hosts defined in this yaml file will be updated. This is more secure as
-    # your router cannot set any arbitrary DNS records. However, you can allow this for
-    # convenience’s sake by setting useHostsFromRequest to true. When true, the hosts in the config
-    # and request will be merged.
-    useHostsFromRequest: true
 
   - tag: wan-1 # This config has a tag, this means it will only be executed when the `tags` query param includes wan-1.
     authPassword:
       from: Env
       name: AUTH_PASSWORD_WAN1
-    provider:
-      name: Cloudflare
-      config:
+    providers:
+      cloudflare:
+        apiToken:
+          from: Env
+          name: CLOUDFLARE_API_TOKEN
+        hosts:
+          - example.com
+          - name: example.com
+            ttl: 60
+            proxied: false
         zoneId:
           from: Env
           name: CLOUDFLARE_ZONE_ID
-        apiToken:
-          from: Env
-          name: CLOUDFLARE_WAN1_API_TOKEN
-    hosts:
-      - example.com
-      - sub.example.com
-    useHostsFromRequest: true
