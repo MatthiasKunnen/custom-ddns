@@ -42,6 +42,11 @@ interface ConfigsItem {
     useHostsFromRequest?: boolean | null;
 }
 
+/**
+ * Variables can either have their value set directly or the location of its value can be described.
+ * @example {"var": "value"}
+ * @example {"var": {"from": "Env", "name": "ENV_VAR"}}
+ */
 export type Variable<T = string> = T | {
     /**
      * Where to get the variable from.

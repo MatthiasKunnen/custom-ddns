@@ -154,6 +154,18 @@
           ],
           "type": "object"
         }
+      ],
+      "description": "Variables can either have their value set directly or the location of its value can be described.",
+      "examples": [
+        {
+          "var": "value"
+        },
+        {
+          "var": {
+            "from": "Env",
+            "name": "ENV_VAR"
+          }
+        }
       ]
     },
     "Variable<boolean>": {
@@ -180,6 +192,18 @@
           ],
           "type": "object"
         }
+      ],
+      "description": "Variables can either have their value set directly or the location of its value can be described.",
+      "examples": [
+        {
+          "var": "value"
+        },
+        {
+          "var": {
+            "from": "Env",
+            "name": "ENV_VAR"
+          }
+        }
       ]
     },
     "Variable<number>": {
@@ -205,6 +229,18 @@
             "name"
           ],
           "type": "object"
+        }
+      ],
+      "description": "Variables can either have their value set directly or the location of its value can be described.",
+      "examples": [
+        {
+          "var": "value"
+        },
+        {
+          "var": {
+            "from": "Env",
+            "name": "ENV_VAR"
+          }
         }
       ]
     }
