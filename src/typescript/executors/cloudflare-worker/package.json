@@ -5,8 +5,10 @@
     "type": "module",
     "private": true,
     "scripts": {
+        "deploy": "wrangler deploy",
         "dev": "wrangler dev",
-        "lint": "eslint \"src/**/*.ts\""
+        "lint": "eslint \"src/**/*.ts\"",
+        "login": "wrangler login --scopes user:read workers_scripts:write workers_routes:write"
     },
     "dependencies": {},
     "devDependencies": {
