@@ -72,7 +72,7 @@
         },
         "useHostsFromRequest": {
           "default": false,
-          "description": "When true, any hostname specified in the request will be updated. Is combined with the `hosts` property.",
+          "description": "When true, any hostname specified in the request will be updated. The hostnames specified in the request are combined with the `hosts` property.",
           "type": [
             "boolean",
             "null"

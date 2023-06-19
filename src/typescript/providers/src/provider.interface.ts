@@ -23,8 +23,8 @@ export type ProviderConfigs = CloudflareProviderConfig;
 export interface ProviderBaseConfig {
 
     /**
-     * When true, any hostname specified in the request will be updated. Is combined with the
-     * `hosts` property.
+     * When true, any hostname specified in the request will be updated. The hostnames specified in
+     * the request are combined with the `hosts` property.
      * @default false
      */
     useHostsFromRequest?: boolean | null;
