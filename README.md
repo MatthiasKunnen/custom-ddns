@@ -2,7 +2,7 @@
 
 # Custom DDNS
 
-Keep your A (ipv4) and AAAA (ipv6) records in sync with the public IP of your router. Useful in the following cases:
+Keep your A (IPv4) and AAAA (IPv6) records in sync with the public IP of your router. Useful in the following cases:
 - Your router has DDNS functionality but does not support your DNS provider.
 - You do not want your router to have unlimited write access to your DNS records. I.e. you only need DDNS for certain subdomains, and you would be negatively impacted if any other records were created or modified.
 - Your router supports DDNS and you want to update multiple DNS records across different domains and DNS providers.
