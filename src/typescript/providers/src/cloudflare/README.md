@@ -17,7 +17,7 @@ The ID of your Cloudflare zone. See <https://www.cloudflare.com/en-gb/learning/d
 Either a list of domain names or a list of objects with the `name`, `proxied`, and `ttl` properties.
 
 `hosts.name` string  
-The FQDN you want to update the domain name of.
+The Fully Qualified Domain Name to update the DNS record of.
 
 `hosts.proxied` boolean  
 Whether to enable Cloudflare proxy for the DNS records. If not specified, update will not overwrite the existing proxy setting and create will use the Cloudflare default.
