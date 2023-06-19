@@ -103,32 +103,42 @@ export class CloudflareProvider implements Provider {
                     });
                 }
             } else {
-                for (const record of listDnsRecordData.result) {
-                    const patchDnsRecordResponse = await this.cloudflareRequest(
-                        `client/v4/zones/${zoneId}/dns_records/${record.id}`,
+                for (let i = 1; i < listDnsRecordData.result.length; i++) {
+                    // Delete DNS records that could cause a duplicate DNS record
+                    await this.cloudflareRequest(
+                        `client/v4/zones/${zoneId}/dns_records/${listDnsRecordData.result[i].id}`,
                         cloudflareApiToken,
                         {
-                            method: 'PATCH',
-                            body: JSON.stringify({
-                                content: input.ip,
-                                proxied,
-                                ttl: ttl,
-                            }),
+                            method: 'DELETE',
                         },
                     );
-                    const patchDnsRecordData: any = await patchDnsRecordResponse.json();
-                    if (patchDnsRecordData.success !== true) {
-                        throw new CustomError({
-                            message: 'Cloudflare provider: Failed to patch DNS record',
-                            info: {
-                                zoneId,
-                                recordId: record.id,
-                                host: punyName,
-                                ip: input.ip,
-                                responseData: patchDnsRecordData,
-                            },
-                        });
-                    }
+                }
+
+                const recordToUpdateId = listDnsRecordData.result[0].id;
+                const patchDnsRecordResponse = await this.cloudflareRequest(
+                    `client/v4/zones/${zoneId}/dns_records/${recordToUpdateId}`,
+                    cloudflareApiToken,
+                    {
+                        method: 'PATCH',
+                        body: JSON.stringify({
+                            content: input.ip,
+                            proxied,
+                            ttl: ttl,
+                        }),
+                    },
+                );
+                const patchDnsRecordData: any = await patchDnsRecordResponse.json();
+                if (patchDnsRecordData.success !== true) {
+                    throw new CustomError({
+                        message: 'Cloudflare provider: Failed to patch DNS record',
+                        info: {
+                            zoneId,
+                            recordId: recordToUpdateId,
+                            host: punyName,
+                            ip: input.ip,
+                            responseData: patchDnsRecordData,
+                        },
+                    });
                 }
             }
         }));
