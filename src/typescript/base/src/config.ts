@@ -1,5 +1,5 @@
 import type {ErrorObject} from 'ajv';
-import {getProviders} from 'ddns-providers/src/providers';
+import {getProviders} from 'ddns-providers';
 import * as yaml from 'js-yaml';
 import isFQDN from 'validator/es/lib/isFQDN';
 

@@ -1,4 +1,4 @@
-import {getProviders} from 'ddns-providers/src/providers';
+import {getProviders} from 'ddns-providers';
 
 import {getVariable} from './config';
 import type {Config, Variable} from './config.interface';
