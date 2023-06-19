@@ -31,15 +31,15 @@ export class CloudflareProvider implements Provider {
 
         await Promise.all(hosts.map(async hostConfig => {
             let host: string;
-            let ttl: number | null | undefined;
-            let proxied: boolean | null | undefined;
+            let ttl: number | undefined;
+            let proxied: boolean | undefined;
 
             if (typeof hostConfig === 'string') {
                 host = hostConfig;
             } else {
                 host = hostConfig.name;
-                ttl = hostConfig.ttl;
-                proxied = hostConfig.proxied;
+                ttl = hostConfig.ttl ?? undefined;
+                proxied = hostConfig.proxied ?? undefined;
             }
 
             if (host !== zoneName && !host.endsWith(`.${zoneName}`)) {
