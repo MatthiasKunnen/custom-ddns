@@ -32,7 +32,7 @@ Follow these links to read how to configure the routers:
 Executors implement a public web server that takes requests from the routers. An executor is small and language/platform specific. Examples of platforms are Docker and Cloudflare Workers. The executor performs authentication and updates the DNS records using the configured [providers](#providers). 
 
 Currently supported (platform/language):
-- [Cloudflare Worker/TypeScript](./src/typescript/executors/cloudflare-worker)
+- [Cloudflare Workers/TypeScript](./src/typescript/executors/cloudflare-worker)
 
 ### Providers
 Providers are executed by the _Executors_ and contain the DNS provider specific code for updating the DNS records.

@@ -1,4 +1,4 @@
-# Cloudflare Worker Executor
+# Cloudflare Workers Executor
 An executor that runs on Cloudflare workers written in TypeScript.
 
 ## Deploy
