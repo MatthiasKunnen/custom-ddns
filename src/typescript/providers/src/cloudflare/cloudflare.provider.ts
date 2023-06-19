@@ -132,8 +132,6 @@ export class CloudflareProvider implements Provider {
                 }
             }
         }));
-
-        return Promise.resolve(undefined);
     }
 
     private async getZoneName(zoneId: string, cloudflareApiToken: string): Promise<string> {
