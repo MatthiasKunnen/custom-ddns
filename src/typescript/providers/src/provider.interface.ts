@@ -18,7 +18,7 @@ export interface ProvidersConfig {
     cloudflare?: CloudflareProviderConfig;
 }
 
-export type ProviderConfigs = CloudflareProviderConfig;
+export type ProviderConfigs = NonNullable<ProvidersConfig[keyof ProvidersConfig]>;
 
 export interface ProviderBaseConfig {
 
