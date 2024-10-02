@@ -1,4 +1,4 @@
-import {getProviders} from 'ddns-providers';
+import {getProvider} from 'ddns-providers';
 
 import {getVariable} from './config';
 import type {Config, Variable} from './config.interface';
@@ -50,11 +50,9 @@ export async function updateIp(
             });
         }
 
-        const providers = getProviders(c.providers);
-
-        for (const {providerConfig, provider} of providers) {
+        for (let [providerName, config] of Object.entries(c.providers)) {
+            const provider = getProvider(providerName, config);
             await provider.updateIp({
-                config: providerConfig as any, // Validated so we can cast without issue
                 getVariable: getVariableIntermediate,
                 ip,
                 ipVersion,

@@ -1,7 +1,6 @@
 import type {ErrorObject} from 'ajv';
-import {getProviders} from 'ddns-providers';
+import {getProvider} from 'ddns-providers';
 import * as yaml from 'js-yaml';
-import isFQDN from 'validator/es/lib/isFQDN';
 
 import {DdnsConfig} from '../../../../config.schema.validate';
 import type {Config, Variable} from './config.interface';
@@ -32,19 +31,15 @@ export function parseConfig(configString: string): Config {
 
     let configIndex = 0;
     for (const item of validatedConfig.configs) {
-        for (const {providerConfig, providerName} of getProviders(item.providers)) {
-            for (const hostConfig of providerConfig.hosts ?? []) {
-                const host = typeof hostConfig === 'string' ? hostConfig : hostConfig.name;
-                if (!isFQDN(host)) {
-                    throw new CustomError({
-                        message: `Host ${host} in config[${configIndex}].${providerName} `
-                            + `is not a valid FQDN`,
-                        info: {
-                            config: item,
-                            host,
-                        },
-                    });
-                }
+        for (const [providerName, config] of Object.entries(item.providers)) {
+            try {
+                const provider = getProvider(providerName, config)
+                provider.assertValidConfig()
+            } catch (e) {
+                throw new CustomError({
+                    message: `Failed to validate DDNS config[${configIndex}].${providerName}.`,
+                    originalError: e,
+                })
             }
         }
         configIndex++;

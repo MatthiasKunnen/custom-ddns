@@ -1,6 +1,7 @@
 interface CustomErrorInput {
     info?: Record<string, unknown>;
     message: string;
+    originalError?: unknown;
     responseHeaders?: Record<string, string>;
     status?: number;
 }
@@ -8,6 +9,7 @@ interface CustomErrorInput {
 export class CustomError extends Error {
 
     info?: Record<string, unknown>;
+    originalError?: unknown;
     responseHeaders?: Record<string, string>;
     status?: number;
 
@@ -16,6 +18,10 @@ export class CustomError extends Error {
 
         if (input.info !== undefined) {
             this.info = input.info;
+        }
+
+        if (input.originalError !== undefined) {
+            this.originalError = input.originalError;
         }
 
         if (input.responseHeaders !== undefined) {

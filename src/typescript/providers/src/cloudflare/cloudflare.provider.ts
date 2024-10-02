@@ -3,20 +3,22 @@ import * as punycode from 'punycode.js';
 
 import type {Provider, UpdateIpInput} from '../provider.interface';
 import type {CloudflareProviderConfig} from './config.interface';
+import isFQDN from 'validator/es/lib/isFQDN';
 
 export class CloudflareProvider implements Provider {
 
-    static readonly providerName = 'cloudflare';
+    constructor(
+        private readonly config: CloudflareProviderConfig,
+    ) {
+    }
 
     async updateIp(input: UpdateIpInput): Promise<void> {
-        // Cast is allowed because it should have been validated
-        const config = input.config as unknown as CloudflareProviderConfig;
-        const cloudflareApiToken = input.getVariable(config.apiToken);
+        const cloudflareApiToken = input.getVariable(this.config.apiToken);
         if (cloudflareApiToken == null) {
             throw new Error('Cloudflare provider: apiToken not provided');
         }
 
-        const zoneId = input.getVariable(config.zoneId);
+        const zoneId = input.getVariable(this.config.zoneId);
         if (zoneId == null) {
             throw new Error('Cloudflare provider: zoneId not provided');
         }
@@ -25,8 +27,8 @@ export class CloudflareProvider implements Provider {
         const zoneName = await this.getZoneName(zoneId, cloudflareApiToken);
 
         const hosts = Array.from(new Set([
-            ...config.hosts ?? [],
-            ...config.useHostsFromRequest === true ? input.requestHosts : [],
+            ...this.config.hosts ?? [],
+            ...this.config.useHostsFromRequest === true ? input.requestHosts : [],
         ]));
 
         await Promise.all(hosts.map(async hostConfig => {
@@ -142,6 +144,21 @@ export class CloudflareProvider implements Provider {
                 }
             }
         }));
+    }
+
+    assertValidConfig() {
+        for (const hostConfig of this.config.hosts ?? []) {
+            const host = typeof hostConfig === 'string' ? hostConfig : hostConfig.name;
+            if (!isFQDN(host)) {
+                throw new CustomError({
+                    message: `Host ${host} is not a valid FQDN`,
+                    info: {
+                        config: this.config,
+                        host,
+                    },
+                });
+            }
+        }
     }
 
     private async getZoneName(zoneId: string, cloudflareApiToken: string): Promise<string> {
