@@ -157,6 +157,9 @@
       "properties": {
         "cloudflare": {
           "$ref": "#/definitions/CloudflareProviderConfig"
+        },
+        "wix": {
+          "$ref": "#/definitions/WixProviderConfig"
         }
       },
       "type": "object"
@@ -198,6 +201,95 @@
           }
         }
       ]
+    },
+    "WixHost": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/WixHostAdvanced"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "WixHostAdvanced": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "The Fully Qualified Domain Name to update the DNS record of.",
+          "type": "string"
+        },
+        "ttl": {
+          "description": "The Time To Live in seconds to be set on the DNS record. If not specified, update will not set TTL and create will use automatic TTL.",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "WixProviderConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "accountId": {
+          "$ref": "#/definitions/Variable",
+          "description": "The account ID linked to the API token used when updating DNS records on Wix.",
+          "examples": [
+            {
+              "from": "Env",
+              "name": "WIX_ACCOUNT_ID"
+            }
+          ]
+        },
+        "apiToken": {
+          "$ref": "#/definitions/Variable",
+          "description": "The API token used when updating DNS records on Wix. Needs All account permissions > Manage Domains. Needs to be created using the owner account.",
+          "examples": [
+            {
+              "from": "Env",
+              "name": "WIX_API_TOKEN"
+            }
+          ]
+        },
+        "dnsZone": {
+          "$ref": "#/definitions/Variable",
+          "description": "The Wix DNS zone name."
+        },
+        "hosts": {
+          "description": "The hosts to update the DNS record of.",
+          "examples": [
+            [
+              "example.com",
+              {
+                "name": "example.com",
+                "ttl": 60
+              }
+            ]
+          ],
+          "items": {
+            "$ref": "#/definitions/WixHost"
+          },
+          "type": "array"
+        },
+        "useHostsFromRequest": {
+          "default": false,
+          "description": "When `false` (default), only the hosts in the config will have their IP set. This is more secure as the router will not be able to set arbitrary A and AAAA records.\n\nWhen `true`, any hostname specified in the request will be updated. The hostnames specified in the request are combined with the `hosts` property.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "accountId",
+        "apiToken",
+        "dnsZone"
+      ],
+      "type": "object"
     }
   }
 }
