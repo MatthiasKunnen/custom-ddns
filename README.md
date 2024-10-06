@@ -38,7 +38,8 @@ Currently supported (platform/language):
 Providers are executed by the _Executors_ and contain the DNS provider specific code for updating the DNS records.
 
 Currently supported (DNS provider/language):
-- [Cloudflare/TypeScript](./src/typescript/providers/src/cloudflare) 
+- [Cloudflare/TypeScript](./src/typescript/providers/src/cloudflare)
+- [Wix/Typescript](./src/typescript/providers/src/wix) ***experimental***
 
 ## Configuration and usage
 Follow these steps:
