@@ -4,18 +4,18 @@ import type {ProviderBaseConfig} from '../provider.interface';
 
 export interface WixProviderConfig extends ProviderBaseConfig {
     /**
-     * The account ID linked to the API token used when updating DNS records on Wix.
+     * The account ID linked to the API key used when updating DNS records on Wix.
      * @example {"from": "Env", "name": "WIX_ACCOUNT_ID"}
      */
     accountId: Variable;
 
     /**
-     * The API token used when updating DNS records on Wix.
+     * The API key used when updating DNS records on Wix.
      * Needs All account permissions > Manage Domains.
-     * Needs to be created using the owner account.
-     * @example {"from": "Env", "name": "WIX_API_TOKEN"}
+     * Needs to be created using the account of the owner of the site to which the domain is linked.
+     * @example {"from": "Env", "name": "WIX_API_KEY"}
      */
-    apiToken: Variable;
+    apiKey: Variable;
 
     /**
      * The Wix DNS zone name.

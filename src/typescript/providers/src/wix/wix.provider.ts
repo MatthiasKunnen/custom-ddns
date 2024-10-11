@@ -12,9 +12,9 @@ export class WixProvider implements Provider {
     }
 
     async updateIp(input: UpdateIpInput): Promise<void> {
-        const wixApiToken = input.getVariable(this.config.apiToken);
-        if (wixApiToken == null) {
-            throw new Error('Wix provider: apiToken not provided');
+        const wixApiKey = input.getVariable(this.config.apiKey);
+        if (wixApiKey == null) {
+            throw new Error('Wix provider: apiKey not provided');
         }
 
         const wixAccountId = input.getVariable(this.config.accountId);
@@ -45,7 +45,7 @@ export class WixProvider implements Provider {
 
         const getDnsZoneResponse = await this.wixRequest(
             `domains/v1/dns-zones/${wixDnsZone}`,
-            wixApiToken,
+            wixApiKey,
             wixAccountId,
         );
         if (!getDnsZoneResponse.ok) {
@@ -95,7 +95,7 @@ export class WixProvider implements Provider {
 
         const updateDnsResponse = await this.wixRequest(
             `domains/v1/dns-zones/${wixDnsZone}`,
-            wixApiToken,
+            wixApiKey,
             wixAccountId,
             {
                 method: 'PATCH',
