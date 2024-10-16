@@ -23,6 +23,6 @@ const ajv = new Ajv({
     schemas: [schema],
 });
 
-let moduleCode = standaloneCode(ajv);
+let moduleCode = standaloneCode(ajv) + '\n';
 
 fs.writeFileSync(path.join(__dirname, '..', 'config.schema.validate.js'), moduleCode);
