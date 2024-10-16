@@ -26,8 +26,11 @@ Whether to enable Cloudflare proxy for the DNS records. If not specified, update
 The TTL of the DNS records. If not specified, update will not overwrite the existing TTL and create will use the Cloudflare _Auto_ setting.
 
 `useHostsFromRequest` boolean  
-When `true`, any hostname specified in the request will be updated. The hostnames specified in
-the request are combined with the `hosts` property.
+When `false` (default), only the hosts in the config will have their IP set.
+This is more secure as the router will not be able to set arbitrary A and AAAA records.  
+When `true`, any hostname specified in the request will be updated.
+The hostnames specified in the request are combined with the hosts property.
+
 
 ### Example
 Minimal config:
@@ -38,9 +41,8 @@ cloudflare:
     name: CLOUDFLARE_API_TOKEN
   zoneId: 0eb4e056cd3ad6653d4635e1aa208992
   hosts:
-    - example.com
-    - name: example.com
+    - foo.example.com
+    - name: bar.example.com
       ttl: 60
       proxied: false
-  useHostsFromRequest: true
 ```
