@@ -18,10 +18,13 @@ export interface Provider {
     assertValidConfig: () => void;
 }
 
+/*
+Matches the name of the provider to the configuration object it expects.
+The name as it appears in this interface will be as it is expected in the providers section in
+config.yaml.
+ */
 /**
- * Matches the name of the provider to the configuration object it expects.
- * The name as it appears in this interface will be as it is expected in the providers section in
- * config.yaml.
+ * An object containing the provider (key), and its respective configuration (value).
  */
 export interface ProvidersConfig {
     cloudflare?: CloudflareProviderConfig;

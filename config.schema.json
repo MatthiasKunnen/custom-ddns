@@ -136,6 +136,7 @@
     },
     "ProvidersConfig": {
       "additionalProperties": false,
+      "description": "An object containing the provider (key), and its respective configuration (value).",
       "properties": {
         "cloudflare": {
           "$ref": "#/definitions/CloudflareProviderConfig"
