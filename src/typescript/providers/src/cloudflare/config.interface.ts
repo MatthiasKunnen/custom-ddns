@@ -2,6 +2,24 @@ import type {Variable} from 'ddns-base';
 
 import type {ProviderBaseConfig} from '../provider.interface';
 
+/**
+ * @example
+ * {
+ *     "apiToken": {
+ *         "from": "Env",
+ *         "name": "CLOUDFLARE_API_TOKEN",
+ *     },
+ *     "zoneId": "06653d4635e1aa208992",
+ *     "hosts": [
+ *         "foo.example.com",
+ *         {
+ *             "name": "bar.example.com",
+ *             "proxied": true,
+ *             "ttl": 60,
+ *         }
+ *     ]
+ * }
+ */
 export interface CloudflareProviderConfig extends ProviderBaseConfig {
 
     /**
@@ -12,7 +30,7 @@ export interface CloudflareProviderConfig extends ProviderBaseConfig {
 
     /**
      * The hosts to update the DNS record of.
-     * @example ["example.com", {"name": "example.com", "proxied": true, "ttl": 60}]
+     * @example ["foo.example.com", {"name": "bar.example.com", "proxied": true, "ttl": 60}]
      */
     hosts?: Array<CloudflareHost>;
 
