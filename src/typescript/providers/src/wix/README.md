@@ -50,8 +50,7 @@ wix:
     name: WIX_API_KEY
   zone: example.com
   hosts:
-    - example.com
-    - name: example.com
+    - foo.example.com
+    - name: bar.example.com
       ttl: 60
-  useHostsFromRequest: true
 ```
