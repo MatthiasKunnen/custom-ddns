@@ -234,6 +234,26 @@
     },
     "WixProviderConfig": {
       "additionalProperties": false,
+      "examples": [
+        {
+          "accountId": {
+            "from": "Env",
+            "name": "WIX_ACCOUNT_ID"
+          },
+          "apiKey": {
+            "from": "Env",
+            "name": "WIX_API_KEY"
+          },
+          "dnsZone": "example.com",
+          "hosts": [
+            "foo.example.com",
+            {
+              "name": "bar.example.com",
+              "ttl": 60
+            }
+          ]
+        }
+      ],
       "properties": {
         "accountId": {
           "$ref": "#/definitions/Variable",
@@ -263,9 +283,9 @@
           "description": "The hosts to update the DNS record of.",
           "examples": [
             [
-              "example.com",
+              "foo.example.com",
               {
-                "name": "example.com",
+                "name": "bar.example.com",
                 "ttl": 60
               }
             ]

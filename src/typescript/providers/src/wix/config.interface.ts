@@ -2,6 +2,27 @@ import type {Variable} from 'ddns-base';
 
 import type {ProviderBaseConfig} from '../provider.interface';
 
+/**
+ * @example
+ * {
+ *     "accountId": {
+ *         "from": "Env",
+ *         "name": "WIX_ACCOUNT_ID",
+ *     },
+ *     "apiKey": {
+ *         "from": "Env",
+ *         "name": "WIX_API_KEY",
+ *     },
+ *     "dnsZone": "example.com",
+ *     "hosts": [
+ *         "foo.example.com",
+ *         {
+ *             "name": "bar.example.com",
+ *             "ttl": 60,
+ *         }
+ *     ]
+ * }
+ */
 export interface WixProviderConfig extends ProviderBaseConfig {
     /**
      * The account ID of the account that created the API key, this can be found at
@@ -28,7 +49,7 @@ export interface WixProviderConfig extends ProviderBaseConfig {
 
     /**
      * The hosts to update the DNS record of.
-     * @example ["example.com", {"name": "example.com", "ttl": 60}]
+     * @example ["foo.example.com", {"name": "bar.example.com", "ttl": 60}]
      */
     hosts?: Array<WixHost>;
 }
