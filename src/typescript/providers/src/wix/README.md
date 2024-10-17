@@ -32,8 +32,10 @@ The Fully Qualified Domain Name to update the DNS record of.
 The TTL of the DNS record. If not specified, update will not overwrite the existing TTL and create will use the Wix default setting.  
 
 `useHostsFromRequest` boolean  
-When `true`, any hostname specified in the request will be updated. The hostnames specified in
-the request are combined with the `hosts` property.
+When `false` (default), only the hosts in the config will have their IP set.
+This is more secure as the router will not be able to set arbitrary A and AAAA records.  
+When `true`, any hostname specified in the request will be updated.
+The hostnames specified in the request are combined with the hosts property.
 
 ### Example
 
