@@ -37,8 +37,8 @@ configs:
           from: Env
           name: CLOUDFLARE_API_TOKEN
         hosts:
-          - example.com
-          - name: example.com
+          - foo.example.com
+          - name: bar.example.com
             ttl: 60
             proxied: false
         zoneId:
