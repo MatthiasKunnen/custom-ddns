@@ -18,7 +18,7 @@ export interface WixProviderConfig extends ProviderBaseConfig {
     apiKey: Variable;
 
     /**
-     * The Wix DNS zone name.
+     * The DNS zone.
      * @example example.com
      */
     dnsZone: Variable;
