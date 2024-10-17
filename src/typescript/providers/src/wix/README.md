@@ -1,6 +1,6 @@
 # Wix provider
 
-***Experimental*** the wix API endpoints used are still in `Developer Preview`.
+***Experimental***, the wix API endpoints used are still in `Developer Preview`.
 
 ## Requirements
 
