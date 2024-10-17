@@ -4,15 +4,18 @@ import type {ProviderBaseConfig} from '../provider.interface';
 
 export interface WixProviderConfig extends ProviderBaseConfig {
     /**
-     * The account ID linked to the API key used when updating DNS records on Wix.
+     * The account ID of the account that created the API key, this can be found at
+     * <https://manage.wix.com/account/api-keys> when at least one API key is generated.
      * @example {"from": "Env", "name": "WIX_ACCOUNT_ID"}
      */
     accountId: Variable;
 
     /**
      * The API key used when updating DNS records on Wix.
-     * Needs All account permissions > Manage Domains.
-     * Needs to be created using the account of the owner of the site to which the domain is linked.
+     * Generate one at <https://manage.wix.com/account/api-keys> with the
+     * `All account permissions > Manage Domains` scope.
+     * Only the owner of the Wix _Site_ that is served on the domain can create an API Key with
+     * sufficient permissions. **Co-owners' API Keys will result in permission errors.**
      * @example {"from": "Env", "name": "WIX_API_KEY"}
      */
     apiKey: Variable;

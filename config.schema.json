@@ -237,7 +237,7 @@
       "properties": {
         "accountId": {
           "$ref": "#/definitions/Variable",
-          "description": "The account ID linked to the API key used when updating DNS records on Wix.",
+          "description": "The account ID of the account that created the API key, this can be found at <https://manage.wix.com/account/api-keys> when at least one API key is generated.",
           "examples": [
             {
               "from": "Env",
@@ -247,7 +247,7 @@
         },
         "apiKey": {
           "$ref": "#/definitions/Variable",
-          "description": "The API key used when updating DNS records on Wix. Needs All account permissions > Manage Domains. Needs to be created using the account of the owner of the site to which the domain is linked.",
+          "description": "The API key used when updating DNS records on Wix. Generate one at <https://manage.wix.com/account/api-keys> with the `All account permissions > Manage Domains` scope. Only the owner of the Wix _Site_ that is served on the domain can create an API Key with sufficient permissions. **Co-owners' API Keys will result in permission errors.**",
           "examples": [
             {
               "from": "Env",
@@ -257,7 +257,7 @@
         },
         "dnsZone": {
           "$ref": "#/definitions/Variable",
-          "description": "The Wix DNS zone name."
+          "description": "The DNS zone."
         },
         "hosts": {
           "description": "The hosts to update the DNS record of.",

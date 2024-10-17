@@ -43,6 +43,7 @@ export class WixProvider implements Provider {
             }
         }
 
+        // <https://dev.wix.com/docs/rest/account-level/domains/domain-dns/get-dns-zone>
         const getDnsZoneResponse = await this.wixRequest(
             `domains/v1/dns-zones/${wixDnsZone}`,
             wixApiKey,
@@ -71,7 +72,7 @@ export class WixProvider implements Provider {
             const existingDnsRecord = dnsRecords.find(record => record.hostName === host);
 
             let newTtl: number | undefined;
-            if (isWixAdvancedHost && wixHost.ttl != undefined) {
+            if (isWixAdvancedHost && wixHost.ttl != null) {
                 newTtl = wixHost.ttl;
             } else if (existingDnsRecord !== undefined) {
                 newTtl = existingDnsRecord.ttl;
@@ -93,6 +94,7 @@ export class WixProvider implements Provider {
             }
         }
 
+        // <https://dev.wix.com/docs/rest/account-level/domains/domain-dns/update-dns-zone>
         const updateDnsResponse = await this.wixRequest(
             `domains/v1/dns-zones/${wixDnsZone}`,
             wixApiKey,
@@ -120,6 +122,21 @@ export class WixProvider implements Provider {
         }
     }
 
+    assertValidConfig() {
+        for (const hostConfig of this.config.hosts ?? []) {
+            const host = typeof hostConfig === 'string' ? hostConfig : hostConfig.name;
+            if (!isFQDN(host)) {
+                throw new CustomError({
+                    message: `Host ${host} is not a valid FQDN`,
+                    info: {
+                        config: this.config,
+                        host,
+                    },
+                });
+            }
+        }
+    }
+
     private async wixRequest(
         url: string,
         apiKey: string,
@@ -134,21 +151,6 @@ export class WixProvider implements Provider {
                 ...options?.headers,
             },
         });
-    }
-
-    assertValidConfig() {
-        for (const hostConfig of this.config.hosts ?? []) {
-            const host = typeof hostConfig === 'string' ? hostConfig : hostConfig.name;
-            if (!isFQDN(host)) {
-                throw new CustomError({
-                    message: `Host ${host} is not a valid FQDN`,
-                    info: {
-                        config: this.config,
-                        host,
-                    },
-                });
-            }
-        }
     }
 }
 

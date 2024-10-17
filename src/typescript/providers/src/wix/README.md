@@ -5,9 +5,9 @@
 ## Requirements
 
 - Name of the zone you want to change the DNS records of.
-- API key, generate one at https://manage.wix.com/account/api-keys with the `All account permissions > Manage Domains` scope.  
-  **Only an API key generated using the account of the owner of the site to which the domain is linked can manage DNS records.**
-- Account ID of the account linked to the API key, this can be found at https://manage.wix.com/account/api-keys when at least one API key is generated.
+- API key, generate one at <https://manage.wix.com/account/api-keys> with the `All account permissions > Manage Domains` scope.  
+  Only the owner of the Wix _Site_ that is served on the domain can create an API Key with sufficient permissions. **Co-owners' API Keys will result in permission errors**, see [troubleshooting](#domain-is-not-permitted-to-target-account).
+- Account ID of the account that created the API key, this can be found at <https://manage.wix.com/account/api-keys> when at least one API key is generated.
 
 ## Provider config
 
@@ -29,7 +29,7 @@ Either a list of domain names or a list of objects with the `name` and `ttl` pro
 The Fully Qualified Domain Name to update the DNS record of.
 
 `hosts.ttl` number  
-The TTL of the DNS record. If not specified, update will not overwrite the existing TTL and create will use the Wix default setting.  
+The TTL of the DNS record. If not specified, update will not overwrite the existing TTL and create will use the Wix default setting.
 
 `useHostsFromRequest` boolean  
 When `false` (default), only the hosts in the config will have their IP set.
@@ -40,6 +40,7 @@ The hostnames specified in the request are combined with the hosts property.
 ### Example
 
 Minimal config:
+
 ```yaml
 wix:
   accountId:
@@ -54,3 +55,14 @@ wix:
     - name: bar.example.com
       ttl: 60
 ```
+
+## Troubleshooting
+
+### Domain is not permitted to target account
+
+> DOMAIN_NOT_PERMITTED, domain example.com is not permitted to target account
+
+This error is most likely caused due to the use of an incorrect API Key.
+Verify that you are using an API Key of the owner of the Wix site which uses this domain.
+
+More API error messages can be located in the [REST docs](https://dev.wix.com/docs/rest/account-level/domains/domain-dns/error-messages).
