@@ -14,7 +14,7 @@
 The following provider specific config is available.
 
 `accountId` Var(string) **required**  
-The account ID of the account linked to the `apiKey`.
+The account ID of the account that created the API key.
 
 `apiKey` Var(string) **required**  
 An API key that has `All account permissions > Manage Domains` permissions.
