@@ -1,6 +1,7 @@
 import type {IpVersion, Variable} from 'ddns-base';
 
 import type {CloudflareProviderConfig} from './cloudflare/config.interface';
+import type {WixProviderConfig} from './wix/config.interface';
 
 export interface UpdateIpInput {
     getVariable: (variable: Variable) => string | null | undefined;
@@ -28,6 +29,7 @@ config.yaml.
  */
 export interface ProvidersConfig {
     cloudflare?: CloudflareProviderConfig;
+    wix?: WixProviderConfig;
 }
 
 export interface ProviderBaseConfig {

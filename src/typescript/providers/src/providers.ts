@@ -1,5 +1,6 @@
 import {CloudflareProvider} from './cloudflare/cloudflare.provider';
 import type {Provider, ProvidersConfig} from './provider.interface';
+import {WixProvider} from './wix/wix.provider';
 
 /**
  * Add new providers here.
@@ -8,6 +9,7 @@ import type {Provider, ProvidersConfig} from './provider.interface';
  */
 const allProviders = {
     cloudflare: CloudflareProvider,
+    wix: WixProvider,
 } as const satisfies AllProviders;
 
 type AllProviders<T = Required<ProvidersConfig>> = {
