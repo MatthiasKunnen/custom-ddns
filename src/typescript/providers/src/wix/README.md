@@ -62,7 +62,7 @@ wix:
 
 > DOMAIN_NOT_PERMITTED, domain example.com is not permitted to target account
 
-This error is most likely caused due to the use of an incorrect API Key.
-Verify that you are using an API Key of the owner of the Wix site which uses this domain.
+This error is most likely caused due to the use of an API Key with insufficient permissions.
+Verify that you are using an API Key of the owner (not co-owner) of the Wix _Site_ which uses this domain.
 
 More API error messages can be located in the [REST docs](https://dev.wix.com/docs/rest/account-level/domains/domain-dns/error-messages).
